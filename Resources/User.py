@@ -1,6 +1,6 @@
 import psycopg2
 from flask_restful import Resource, reqparse
-
+from Models.UserModel import UserModel
 
 class User(Resource):
 
@@ -13,11 +13,8 @@ class User(Resource):
         result = cursor.fetchone()
         dbConnection.close()
 
-        print(result)
+        user = UserModel(result[0], result[1])
         if result:
-            return {
-                "username": result[0],
-                "phoneNumber": result[1]
-            }
+            return user.json()
         else:
             return {"message": "user not found"}
