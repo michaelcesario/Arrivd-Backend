@@ -1,4 +1,5 @@
 from flask import jsonify
+import constants
 import psycopg2
 
 class UserModel:
@@ -18,7 +19,7 @@ class UserModel:
 
     @classmethod
     def findByUsername(cls, username):
-        dbConnection = psycopg2.connect(database="arrivd", user="postgres", password="", host="localhost")
+        dbConnection = psycopg2.connect(database=constants.dbName, user=constants.dbUser, password=constants.dbPassword, host=constants.dbHost)
         cursor = dbConnection.cursor()
 
         query = "select * from users where username = %s"
@@ -31,7 +32,7 @@ class UserModel:
 
     @classmethod
     def findByID(cls, ID):
-        dbConnection = psycopg2.connect(database="arrivd", user="postgres", password="", host="localhost")
+        dbConnection = psycopg2.connect(database=constants.dbName, user=constants.dbUser, password=constants.dbPassword, host=constants.dbHost)
         cursor = dbConnection.cursor()
 
         findUserQuery = "select * from users where id = %s;"

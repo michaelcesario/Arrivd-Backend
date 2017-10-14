@@ -1,4 +1,5 @@
 import psycopg2
+import constants
 from flask_restful import Resource, reqparse
 from Models.UserModel import UserModel
 
@@ -16,7 +17,7 @@ class RegisterUser(Resource):
         if UserModel.findByUsername(userData['username']):
             return {"message": "Username already exists"}
 
-        dbConnection = psycopg2.connect(database="arrivd", user="postgres", password="", host="localhost")
+        dbConnection = psycopg2.connect(database=constants.dbName, user=constants.dbUser, password=constants.dbPassword, host=constants.dbHost)
         cursor = dbConnection.cursor()
 
         query = "INSERT INTO users(username, phonenumber, password) VALUES (%s, %s, %s)"

@@ -18,7 +18,7 @@ def hello_world():
 
 
 api.add_resource(User, '/user/<string:username>')
-api.add_resource(RegisterUser, '/user/register')
+api.add_resource(RegisterUser, '/register')
 
 if __name__ == '__main__':
     app.run()
