@@ -4,7 +4,7 @@ import psycopg2
 
 class UserModel:
 
-    def __init__(self, username, phoneNumber, _id, password):
+    def __init__(self, _id, username, phoneNumber, password):
         self.username = username
         self.phoneNumber = phoneNumber
         self.password = password

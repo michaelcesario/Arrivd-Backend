@@ -3,6 +3,7 @@ from Models.NotificationModel import NotificationModel
 import psycopg2
 import constants
 
+
 class NotificationTrigger(Resource):
 
     def post(self, id):

@@ -1,6 +1,6 @@
 import psycopg2
 from Models.UserModel import UserModel
-from twilio.rest import Client
+#from twilio.rest import Client
 import constants
 
 # Channel:

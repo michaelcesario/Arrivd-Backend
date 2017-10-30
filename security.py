@@ -12,6 +12,5 @@ def authenticate(username, password):
 
 # JWT function: payload contains info in jwt
 def identity(payload):
-    print(payload)
     userID = payload['identity']
     return UserModel.findByID(userID)

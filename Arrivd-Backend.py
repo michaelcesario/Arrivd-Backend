@@ -5,7 +5,7 @@ from flask_jwt import JWT
 from Resources.User import User
 from Resources.Notification import Notification
 from Resources.RegisterUser import RegisterUser
-from Resources.SendNotification import NotificationTrigger
+from Resources.NotificationTrigger import NotificationTrigger
 from security import authenticate, identity
 
 app = Flask(__name__)
