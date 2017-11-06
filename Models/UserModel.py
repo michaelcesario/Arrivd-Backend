@@ -19,7 +19,8 @@ class UserModel:
 
     @classmethod
     def findByUsername(cls, username):
-        cursor = DatabaseConnection.getDBCursor()
+        dbConnection = DatabaseConnection.getDBCursor()
+        cursor = dbConnection.cursor()
 
         query = "select * from users where username = %s"
         cursor.execute(query, (username,))
@@ -30,7 +31,8 @@ class UserModel:
 
     @classmethod
     def findByPhoneNumber(cls, phoneNumber):
-        cursor = DatabaseConnection.getDBCursor()
+        dbConnection = DatabaseConnection.getDBCursor()
+        cursor = dbConnection.cursor()
 
         query = "select * from users where phonenumber = %s"
         cursor.execute(query, (phoneNumber,))
@@ -41,7 +43,8 @@ class UserModel:
 
     @classmethod
     def findByID(cls, ID):
-        cursor = DatabaseConnection.getDBCursor()
+        dbConnection = DatabaseConnection.getDBCursor()
+        cursor = dbConnection.cursor()
 
         findUserQuery = "select * from users where id = %s;"
         cursor.execute(findUserQuery, (ID,))
@@ -52,7 +55,8 @@ class UserModel:
 
     @classmethod
     def findPending(cls, id):
-        cursor = DatabaseConnection.getDBCursor()
+        dbConnection = DatabaseConnection.getDBCursor()
+        cursor = dbConnection.cursor()
 
         query = "select receiver, message, date, n.id as notificationID, destination from notifications n join pending p on n.id = p.id and sender = %s"
         cursor.execute(query, (str(id),))
@@ -78,12 +82,13 @@ class UserModel:
             })
 
         pending = sorted(pending, key=lambda k: k['sortDate'])
-
+        dbConnection.close()
         return pending
 
     @classmethod
     def findDelivered(cls, id):
-        cursor = DatabaseConnection.getDBCursor()
+        dbConnection = DatabaseConnection.getDBCursor()
+        cursor = dbConnection.cursor()
 
         query = "select receiver, message, date, n.id as notificationID, destination from notifications n join delivered d on n.id = d.id and sender = %s"
         cursor.execute(query, (str(id),))
@@ -108,5 +113,5 @@ class UserModel:
                 "destination": destination
             })
         delivered = sorted(delivered, key=lambda k: k['sortDate'])
-
+        dbConnection.close()
         return delivered

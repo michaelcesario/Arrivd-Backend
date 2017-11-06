@@ -14,6 +14,5 @@ class Pending(Resource):
         parser.add_argument('id', type=int, required=True)
 
         notificationID = (parser.parse_args())['id']
-        print(notificationID)
         NotificationModel.deleteFromPending(notificationID)
 

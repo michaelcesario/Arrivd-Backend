@@ -5,7 +5,8 @@ class UserSearch(Resource):
 
     #@jwt_required()
     def post(self, partialMatch):
-        cursor = DatabaseConnection.getDBCursor()
+        dbConnection = DatabaseConnection.getDBCursor()
+        cursor = dbConnection.cursor()
 
         partialMatch = '%' + str(partialMatch).lower() + '%'
         query = "select id, username from users where LOWER(username) like %s"

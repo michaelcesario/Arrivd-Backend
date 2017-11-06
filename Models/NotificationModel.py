@@ -18,7 +18,8 @@ class NotificationModel:
 
     def saveNotification(self):
 
-        cursor = DatabaseConnection.getDBCursor()
+        dbConnection = DatabaseConnection.getDBCursor()
+        cursor = dbConnection.cursor()
 
         query = "insert into notifications(sender, receiver, message, channel, destination) values (%s, %s, %s, %s, %s); select currval('notifications_id_seq')"
         cursor.execute(query, (int(self.sender), self.receiver, self.message, self.channel, self.destination))
@@ -50,17 +51,20 @@ class NotificationModel:
 
     @classmethod
     def deleteFromPending(cls, id):
-        cursor = DatabaseConnection.getDBCursor()
+        dbConnection = DatabaseConnection.getDBCursor()
+        cursor = dbConnection.cursor()
 
         query = "delete from pending where id = %s"
         cursor.execute(query, (id,))
 
         dbConnection.commit()
+        dbConnection.close()
 
 
     @classmethod
     def postToDelivered(cls, id):
-        cursor = DatabaseConnection.getDBCursor()
+        dbConnection = DatabaseConnection.getDBCursor()
+        cursor = dbConnection.cursor()
 
         now = datetime.datetime.now()
         year = str(now.year)
@@ -72,6 +76,7 @@ class NotificationModel:
         cursor.execute(query, (id, date))
 
         dbConnection.commit()
+        dbConnection.close()
 
     @classmethod
     def removePending(self, id):

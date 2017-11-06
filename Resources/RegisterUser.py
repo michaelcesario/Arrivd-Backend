@@ -12,7 +12,6 @@ class RegisterUser(Resource):
 
     def post(self):
         userData = RegisterUser.parser.parse_args()
-        print(userData)
 
         if UserModel.findByUsername(userData['username']):
             return {"message": "Username already exists"}, 422
@@ -22,9 +21,8 @@ class RegisterUser(Resource):
 
         password = sha256_crypt.encrypt(str(userData['password']))
 
-        #print(sha256_crypt.verify("password", password))
-
-        cursor = DatabaseConnection.getDBCursor()
+        dbConnection = DatabaseConnection.getDBCursor()
+        cursor = dbConnection.cursor()
 
         query = "INSERT INTO users(username, phonenumber, password) VALUES (%s, %s, %s)"
         cursor.execute(query, (userData['username'], userData['phoneNumber'], password))

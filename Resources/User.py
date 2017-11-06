@@ -7,7 +7,8 @@ class User(Resource):
 
     @jwt_required()
     def get(self, username):
-        cursor = DatabaseConnection.getDBCursor()
+        dbConnection = DatabaseConnection.getDBCursor()
+        cursor = dbConnection.cursor()
 
         query = "select * from users where username = %s"
         cursor.execute(query, (username,))

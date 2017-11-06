@@ -8,7 +8,8 @@ class NotificationTrigger(Resource):
 
         try:
             # Get notification from database and send
-            cursor = DatabaseConnection.getDBCursor()
+            dbConnection = DatabaseConnection.getDBCursor()
+            cursor = dbConnection.cursor()
 
             query = "select id, sender, receiver, message, channel, destination from notifications where id = %s"
             cursor.execute(query, (id,))

@@ -20,4 +20,4 @@ class DatabaseConnection:
             host=host,
             port=port
         )
-        return dbConnection.cursor()
+        return dbConnection
