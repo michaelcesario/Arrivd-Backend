@@ -18,7 +18,7 @@ class Test(Resource):
         certFile = open('certFile.pem', "r")
         keyFile = open('keyFile.pem', "r")
 
-        apns = APNs(use_sandbox=True, cert_file=cert, key_file=key)
+        apns = APNs(use_sandbox=True, cert_file=certFile, key_file=keyFile)
 
         # Send a notification
         token_hex = '72DDC06B5E4CA9A2AF5C8F1A52D565867BE5CA0C107CDE12050F184BF28313C3'
