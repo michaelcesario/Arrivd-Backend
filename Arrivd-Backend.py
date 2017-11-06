@@ -12,7 +12,9 @@ from Resources.Delivered import Delivered
 from Resources.Test import Test
 from security import authenticate, identity
 
+from db import DatabaseConnection
 
+c = DatabaseConnection.getDBCursor()
 
 app = Flask(__name__)
 app.secret_key = 'test_key'

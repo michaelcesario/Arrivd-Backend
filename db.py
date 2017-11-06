@@ -1,12 +1,12 @@
 import psycopg2
 import os
-import urlparse3
+from urllib.parse import urlparse
 
 
 class DatabaseConnection:
     @classmethod
-    def getDBCursor():
-        url = urlparse3.urlparse(os.environ['DATABASE_URL'])
+    def getDBCursor(cls):
+        url = urlparse(os.environ['DATABASE_URL'])
         dbname = url.path[1:]
         user = url.username
         password = url.password
