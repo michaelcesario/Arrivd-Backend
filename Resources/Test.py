@@ -4,7 +4,7 @@ import os
 
 class Test(Resource):
     def get(self):
-        print('HELLO THERE')
+
 
         cert = os.environ['arrivd-dev-cert']
         key = os.environ['arrivd-dev-key']
@@ -19,6 +19,9 @@ class Test(Resource):
 
         certFile = open('certFile.pem', "r")
         keyFile = open('keyFile.pem', "r")
+
+        print('HELLO THERE')
+        print(certFile.name)
 
         apns = APNs(use_sandbox=True, cert_file=certFile, key_file=keyFile)
 
