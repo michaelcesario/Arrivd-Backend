@@ -1,16 +1,13 @@
 import psycopg2
 import constants
 from flask_restful import Resource, reqparse
-from Models.UserModel import UserModel
-from flask_jwt import jwt_required
+from db import DatabaseConnection
 
 class UserSearch(Resource):
 
     #@jwt_required()
     def post(self, partialMatch):
-        dbConnection = psycopg2.connect(database=constants.dbName, user=constants.dbUser, password=constants.dbPassword,
-                                        host=constants.dbHost)
-        cursor = dbConnection.cursor()
+        cursor = DatabaseConnection.getDBCursor()
 
         partialMatch = '%' + str(partialMatch).lower() + '%'
         query = "select id, username from users where LOWER(username) like %s"

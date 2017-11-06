@@ -1,6 +1,6 @@
-from flask import jsonify
 import constants
 import psycopg2
+from db import DatabaseConnection
 
 class UserModel:
 
@@ -20,8 +20,7 @@ class UserModel:
 
     @classmethod
     def findByUsername(cls, username):
-        dbConnection = psycopg2.connect(database=constants.dbName, user=constants.dbUser, password=constants.dbPassword, host=constants.dbHost)
-        cursor = dbConnection.cursor()
+        cursor = DatabaseConnection.getDBCursor()
 
         query = "select * from users where username = %s"
         cursor.execute(query, (username,))
@@ -32,9 +31,7 @@ class UserModel:
 
     @classmethod
     def findByPhoneNumber(cls, phoneNumber):
-        dbConnection = psycopg2.connect(database=constants.dbName, user=constants.dbUser, password=constants.dbPassword,
-                                        host=constants.dbHost)
-        cursor = dbConnection.cursor()
+        cursor = DatabaseConnection.getDBCursor()
 
         query = "select * from users where phonenumber = %s"
         cursor.execute(query, (phoneNumber,))
@@ -45,8 +42,7 @@ class UserModel:
 
     @classmethod
     def findByID(cls, ID):
-        dbConnection = psycopg2.connect(database=constants.dbName, user=constants.dbUser, password=constants.dbPassword, host=constants.dbHost)
-        cursor = dbConnection.cursor()
+        cursor = DatabaseConnection.getDBCursor()
 
         findUserQuery = "select * from users where id = %s;"
         cursor.execute(findUserQuery, (ID,))
@@ -57,9 +53,7 @@ class UserModel:
 
     @classmethod
     def findPending(cls, id):
-        dbConnection = psycopg2.connect(database=constants.dbName, user=constants.dbUser, password=constants.dbPassword,
-                                        host=constants.dbHost)
-        cursor = dbConnection.cursor()
+        cursor = DatabaseConnection.getDBCursor()
 
         query = "select receiver, message, date, n.id as notificationID, destination from notifications n join pending p on n.id = p.id and sender = %s"
         cursor.execute(query, (str(id),))
@@ -90,9 +84,7 @@ class UserModel:
 
     @classmethod
     def findDelivered(cls, id):
-        dbConnection = psycopg2.connect(database=constants.dbName, user=constants.dbUser, password=constants.dbPassword,
-                                        host=constants.dbHost)
-        cursor = dbConnection.cursor()
+        cursor = DatabaseConnection.getDBCursor()
 
         query = "select receiver, message, date, n.id as notificationID, destination from notifications n join delivered d on n.id = d.id and sender = %s"
         cursor.execute(query, (str(id),))

@@ -1,8 +1,8 @@
 import psycopg2
-from Models.UserModel import UserModel
 #from twilio.rest import Client
 import constants
 import datetime
+from db import DatabaseConnection
 
 # Channel:
 #   1 = text message
@@ -19,8 +19,7 @@ class NotificationModel:
 
     def saveNotification(self):
 
-        dbConnection = psycopg2.connect(database=constants.dbName, user=constants.dbUser, password=constants.dbPassword, host=constants.dbHost)
-        cursor = dbConnection.cursor()
+        cursor = DatabaseConnection.getDBCursor()
 
         query = "insert into notifications(sender, receiver, message, channel, destination) values (%s, %s, %s, %s, %s); select currval('notifications_id_seq')"
         cursor.execute(query, (int(self.sender), self.receiver, self.message, self.channel, self.destination))
@@ -52,9 +51,7 @@ class NotificationModel:
 
     @classmethod
     def deleteFromPending(cls, id):
-        dbConnection = psycopg2.connect(database=constants.dbName, user=constants.dbUser, password=constants.dbPassword,
-                                        host=constants.dbHost)
-        cursor = dbConnection.cursor()
+        cursor = DatabaseConnection.getDBCursor()
 
         query = "delete from pending where id = %s"
         cursor.execute(query, (id,))
@@ -64,9 +61,7 @@ class NotificationModel:
 
     @classmethod
     def postToDelivered(cls, id):
-        dbConnection = psycopg2.connect(database=constants.dbName, user=constants.dbUser, password=constants.dbPassword,
-                                        host=constants.dbHost)
-        cursor = dbConnection.cursor()
+        cursor = DatabaseConnection.getDBCursor()
 
         now = datetime.datetime.now()
         year = str(now.year)

@@ -2,7 +2,7 @@ from flask_restful import Resource, reqparse
 from Models.NotificationModel import NotificationModel
 import psycopg2
 import constants
-
+from db import DatabaseConnection
 
 class NotificationTrigger(Resource):
 
@@ -10,8 +10,7 @@ class NotificationTrigger(Resource):
 
         try:
             # Get notification from database and send
-            dbConnection = psycopg2.connect(database=constants.dbName, user=constants.dbUser, password=constants.dbPassword, host=constants.dbHost)
-            cursor = dbConnection.cursor()
+            cursor = DatabaseConnection.getDBCursor()
 
             query = "select id, sender, receiver, message, channel, destination from notifications where id = %s"
             cursor.execute(query, (id,))

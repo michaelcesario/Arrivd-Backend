@@ -7,3 +7,4 @@ uwsgi
 apns
 psycopg2
 datetime
+urlparse3

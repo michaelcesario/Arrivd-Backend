@@ -3,7 +3,7 @@ import constants
 from flask_restful import Resource, reqparse
 from Models.UserModel import UserModel
 from passlib.hash import sha256_crypt
-
+from db import DatabaseConnection
 
 class RegisterUser(Resource):
 
@@ -26,8 +26,7 @@ class RegisterUser(Resource):
 
         #print(sha256_crypt.verify("password", password))
 
-        dbConnection = psycopg2.connect(database=constants.dbName, user=constants.dbUser, password=constants.dbPassword, host=constants.dbHost)
-        cursor = dbConnection.cursor()
+        cursor = DatabaseConnection.getDBCursor()
 
         query = "INSERT INTO users(username, phonenumber, password) VALUES (%s, %s, %s)"
         cursor.execute(query, (userData['username'], userData['phoneNumber'], password))
