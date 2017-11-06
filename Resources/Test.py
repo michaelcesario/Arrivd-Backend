@@ -6,10 +6,26 @@ class Test(Resource):
     def get(self):
         cert = os.environ['arrivd-dev-cert']
         key = os.environ['arrivd-dev-key']
+
+        certFile = open('certFile.pem', "w+")
+        certFile.write(cert)
+        certFile.close()
+
+        keyFile = open('keyFile.pem', "w+")
+        keyFile.write(key)
+        keyFile.close()
+
+        certFile = open('certFile.pem', "r")
+        keyFile = open('keyFile.pem', "r")
+
         apns = APNs(use_sandbox=True, cert_file=cert, key_file=key)
 
         # Send a notification
         token_hex = '72DDC06B5E4CA9A2AF5C8F1A52D565867BE5CA0C107CDE12050F184BF28313C3'
         payload = Payload(alert="Hello World!", sound="default", badge=1)
         apns.gateway_server.send_notification(token_hex, payload)
+
+        certFile.close()
+        keyFile.close()
+
         return {"message": "hi"}
