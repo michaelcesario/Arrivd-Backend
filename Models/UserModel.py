@@ -1,4 +1,3 @@
-import constants
 import psycopg2
 from db import DatabaseConnection
 

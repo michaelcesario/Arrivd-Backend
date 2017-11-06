@@ -1,7 +1,5 @@
 from flask_restful import Resource, reqparse
 from Models.NotificationModel import NotificationModel
-import psycopg2
-import constants
 from db import DatabaseConnection
 
 class NotificationTrigger(Resource):

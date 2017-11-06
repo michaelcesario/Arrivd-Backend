@@ -1,5 +1,3 @@
-import psycopg2
-import constants
 from flask_restful import Resource, reqparse
 from Models.UserModel import UserModel
 from flask_jwt import jwt_required

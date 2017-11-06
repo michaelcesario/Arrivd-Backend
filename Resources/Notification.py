@@ -1,6 +1,5 @@
 from flask_restful import Resource, reqparse
 from Models.NotificationModel import NotificationModel
-from flask_jwt import jwt_required
 
 class Notification(Resource):
 

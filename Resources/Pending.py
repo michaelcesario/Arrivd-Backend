@@ -1,8 +1,6 @@
 from flask_restful import Resource, reqparse
 from Models.NotificationModel import NotificationModel
 from Models.UserModel import UserModel
-import psycopg2
-import constants
 
 
 class Pending(Resource):

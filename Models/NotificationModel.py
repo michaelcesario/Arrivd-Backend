@@ -1,6 +1,5 @@
 import psycopg2
 #from twilio.rest import Client
-import constants
 import datetime
 from db import DatabaseConnection
 
