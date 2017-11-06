@@ -4,6 +4,8 @@ import os
 
 class Test(Resource):
     def get(self):
+        print('HELLO THERE')
+
         cert = os.environ['arrivd-dev-cert']
         key = os.environ['arrivd-dev-key']
 
