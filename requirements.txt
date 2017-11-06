@@ -5,3 +5,5 @@ Flask-SQLAlchemy
 passlib
 uwsgi
 apns
+psycopg2
+datetime
