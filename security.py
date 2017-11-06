@@ -8,7 +8,7 @@ def authenticate(username, password):
     if not user:
         return None
 
-    if sha256_crypt.verify(user.password, password):
+    if sha256_crypt.verify(str(password), str(user.password)):
         return user
     else:
         return None
