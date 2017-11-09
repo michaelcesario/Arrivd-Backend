@@ -122,9 +122,10 @@ class UserModel:
             dbConnection = DatabaseConnection.getDBCursor()
             cursor = dbConnection.cursor()
 
-            query = "update users set apnstoken = 'hello' where id = %s"
-            cursor.execute(query, (str(token), int(id)))
+            query = "update users set apnstoken = %s where id = %s"
+            cursor.execute(query, (token, id))
 
+            dbConnection.commit()
             dbConnection.close()
             return {"message": "token added"}, 200
         except:
