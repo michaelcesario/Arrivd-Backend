@@ -115,3 +115,17 @@ class UserModel:
         delivered = sorted(delivered, key=lambda k: k['sortDate'])
         dbConnection.close()
         return delivered
+
+    @classmethod
+    def addAPNSToken(cls, id, token):
+        try:
+            dbConnection = DatabaseConnection.getDBCursor()
+            cursor = dbConnection.cursor()
+
+            query = "insert into apns(id, token) values (%s, %s)"
+            cursor.execute(query, (id, token))
+
+            dbConnection.close()
+            return {"message": "token added"}, 200
+        except:
+            return {"message": "an error occured"}, 500

@@ -10,6 +10,7 @@ from Resources.UserSearch import UserSearch
 from Resources.Pending import Pending
 from Resources.Delivered import Delivered
 from Resources.Test import Test
+from Resources.APNS import APNS
 from security import authenticate, identity
 
 from db import DatabaseConnection
@@ -36,6 +37,7 @@ api.add_resource(Notification, '/notification')
 api.add_resource(NotificationTrigger, '/trigger-notification/<int:id>')
 api.add_resource(UserSearch, '/search-user/<string:partialMatch>')
 api.add_resource(Test, '/test')
+api.add_resource(APNS, '/apns/<int:id>')
 
 if __name__ == '__main__':
     app.run()
