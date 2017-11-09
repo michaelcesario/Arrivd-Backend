@@ -26,11 +26,24 @@ class Test(Resource):
         apns = APNs(use_sandbox=True, cert_file='certFile.pem', key_file='keyFile.pem')
 
         # Send a notification
-        token_hex = '72DDC06B5E4CA9A2AF5C8F1A52D565867BE5CA0C107CDE12050F184BF28313C3'
-        payload = Payload(alert="Hello World!", sound="default", badge=1)
-        apns.gateway_server.send_notification(token_hex, payload)
+        #token_hex = '72DDC06B5E4CA9A2AF5C8F1A52D565867BE5CA0C107CDE12050F184BF28313C3'
+        #payload = Payload(alert="Hello World!", sound="default", badge=1)
+        #apns.gateway_server.send_notification(token_hex, payload)
 
         #certFile.close()
         #keyFile.close()
 
-        return {"message": "hi"}
+        dbConnection = DatabaseConnection.getDBCursor()
+        cursor = dbConnection.cursor()
+
+        query = "select id, username, apnstoken from users"
+        cursor.execute(query)
+        result = cursor.fetchall()
+        dbConnection.close()
+
+        users = {}
+        for user in result:
+            token = True if user[2] else False
+            users[user[0]] = {"id": user[0], "username": user[1], "hasAPNSToken": token}
+
+        return users

@@ -9,14 +9,15 @@ class UserSearch(Resource):
         cursor = dbConnection.cursor()
 
         partialMatch = '%' + str(partialMatch).lower() + '%'
-        query = "select id, username from users where LOWER(username) like %s"
+        query = "select id, username, apnstoken from users where LOWER(username) like %s"
         cursor.execute(query, (partialMatch,))
         result = cursor.fetchall()
         dbConnection.close()
 
         users = {}
         for user in result:
-            users[user[0]] = {"id": user[0], "username": user[1]}
+            token = True if user[2] else False
+            users[user[0]] = {"id": user[0], "username": user[1], "hasAPNSToken": token}
 
         print(users)
         return users
