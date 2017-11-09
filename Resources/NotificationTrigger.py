@@ -15,14 +15,18 @@ class NotificationTrigger(Resource):
             cursor.execute(query, (id,))
             notificationData = cursor.fetchone()
 
-            query = "select username, phonenumber from users where id = %s"
+            query = "select username, phonenumber, apnstoken from users where id = %s"
             cursor.execute(query, (int(notificationData[1]),))
-            sender = cursor.fetchone()
+            sender = cursor.fetchone()[0]
+
+            query = "select apnstoken from users where username = %s"
+            cursor.execute(query, (notificationData[2],))
+            receiverToken = cursor.fetchone()[0]
 
             dbConnection.close()
 
             notification = NotificationModel(sender[0], notificationData[2], notificationData[3], notificationData[4], notificationData[5])
-            notification.sendNotification()
+            notification.sendNotification(receiverToken)
 
             NotificationModel.deleteFromPending(id)
             NotificationModel.postToDelivered(id)

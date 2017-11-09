@@ -1,7 +1,8 @@
-import psycopg2
 #from twilio.rest import Client
 import datetime
+from apns import APNs, Frame, Payload
 from db import DatabaseConnection
+import os
 
 # Channel:
 #   1 = text message
@@ -41,13 +42,31 @@ class NotificationModel:
         dbConnection.close()
         return notificationID
 
-    def sendNotification(self):
-        pass
-        #client = Client(constants.twilioAccountSID, constants.twilioAuthToken)
-        #client.api.account.messages.create(
-            #to="+16473803828",
-            #from_="+19029070302",
-            #body="Hello there!")
+
+    def sendNotification(self, token):
+        cert = os.environ['arrivd-dev-cert']
+        key = os.environ['arrivd-dev-key']
+
+        certFile = open('certFile.pem', "w+")
+        certFile.write(cert)
+        certFile.close()
+
+        keyFile = open('keyFile.pem', "w+")
+        keyFile.write(key)
+        keyFile.close()
+
+        # certFile = open('certFile.pem', "r")
+        # keyFile = open('keyFile.pem', "r")
+
+        apns = APNs(use_sandbox=True, cert_file='certFile.pem', key_file='keyFile.pem')
+
+        # Send a notification
+        token_hex = token
+        payload = Payload(alert=self.message, sound="default", badge=0)
+        apns.gateway_server.send_notification(token_hex, payload)
+
+        # certFile.close()
+        # keyFile.close()
 
     @classmethod
     def deleteFromPending(cls, id):
