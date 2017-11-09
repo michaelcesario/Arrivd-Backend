@@ -29,8 +29,8 @@ class RegisterUser(Resource):
         dbConnection = DatabaseConnection.getDBCursor()
         cursor = dbConnection.cursor()
 
-        query = "INSERT INTO users(username, phonenumber, password, apnstoken) VALUES (%s, %s, %s, %s)"
-        cursor.execute(query, (userData['username'], userData['phoneNumber'], password, apnsToken))
+        query = "INSERT INTO users(username, phonenumber, password) VALUES (%s, %s, %s)"
+        cursor.execute(query, (userData['username'], userData['phoneNumber'], password))
 
         dbConnection.commit()
         dbConnection.close()
