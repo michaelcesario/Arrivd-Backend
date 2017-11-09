@@ -1,5 +1,6 @@
 from flask_restful import Resource, reqparse
 from apns import APNs, Frame, Payload
+from db import DatabaseConnection
 import os
 
 class Test(Resource):
