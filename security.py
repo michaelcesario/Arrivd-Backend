@@ -6,7 +6,7 @@ def authenticate(username, password):
     userByName = UserModel.findByUsername(username)
     userByNumber = UserModel.findByPhoneNumber(username)
 
-    if not userByName and not userByNumber:
+    if not (userByName or userByNumber):
         return None
 
     if userByName:
