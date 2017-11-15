@@ -3,13 +3,18 @@ from Models.UserModel import UserModel
 from passlib.hash import sha256_crypt
 
 def authenticate(username, password):
-    user = UserModel.findByUsername(username)
+    userByName = UserModel.findByUsername(username)
+    userByNumber = UserModel.findByPhoneNumber(username)
 
-    if not user:
+    if not user and not userByNumber:
         return None
 
-    if sha256_crypt.verify(str(password), str(user.password)):
-        return user
+    if userByName:
+        if sha256_crypt.verify(str(password), str(userByName.password)):
+            return userByName
+    elif userByNumber:
+        if sha256_crypt.verify(str(password), str(userByNumber.password)):
+            return userByNumber
     else:
         return None
 
