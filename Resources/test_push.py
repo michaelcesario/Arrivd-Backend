@@ -4,7 +4,7 @@ from db import DatabaseConnection
 import os
 
 class TestPush(Resource):
-    def get(self):
+    def get(self, message):
         cert = os.environ['arrivd-dev-cert']
         key = os.environ['arrivd-dev-key']
 
@@ -23,5 +23,5 @@ class TestPush(Resource):
 
         # Send a notification
         token_hex = "F7F8D0C3DEFE6F4D6B0FE5C633EB02923D201E9AF7071868BC5A82E14FEE2EB2"
-        payload = Payload(alert=self.message, sound="default", badge=0)
+        payload = Payload(alert=message, sound="default", badge=0)
         apns.gateway_server.send_notification(token_hex, payload)

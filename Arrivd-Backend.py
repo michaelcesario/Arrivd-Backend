@@ -11,6 +11,7 @@ from Resources.Pending import Pending
 from Resources.Delivered import Delivered
 from Resources.Test import Test
 from Resources.APNS import APNS
+from Resources.test_push import TestPush
 from security import authenticate, identity
 
 from db import DatabaseConnection
@@ -38,6 +39,7 @@ api.add_resource(NotificationTrigger, '/trigger-notification/<int:id>')
 api.add_resource(UserSearch, '/search-user/<string:partialMatch>')
 api.add_resource(Test, '/test')
 api.add_resource(APNS, '/apns/<int:id>')
+api.add_resource(TestPush, '/test-push/<string:message>')
 
 if __name__ == '__main__':
     app.run()
